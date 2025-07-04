@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+*.pyd
+*.pyo
+*.log
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Secrets
+.env
+
+# Data & models
+data/raw/
+data/processed/
+*.npy
+*.npz
+*.pkl
+models/
+*.keras
+*.h5
+
+# Cache & temp files
+*.tmp
+*.bak
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Streamlit
+.streamlit/
+
+# Test artifacts
+htmlcov/
+coverage.xml
+.cache/
+pytest_cache/
+
+# Exported files
+*.csv
+*.pdf
+*.svg
+*.png
+
+# Distillation outputs
+distillation_report.md

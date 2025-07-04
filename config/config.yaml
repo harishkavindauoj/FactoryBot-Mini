@@ -1,0 +1,39 @@
+data:
+  raw_path: data/raw/
+  processed_path: data/processed/
+  features_cache: data/features.npy
+
+model:
+  type: GRU
+  input_shape: [30, 24]
+  output_dims:
+    risk_level: 4
+    ttf: 1
+  hidden_units: 64
+  dropout: 0.3
+  # Loss weights to balance multi-task learning
+  loss_weights:
+    risk_level: 1.0
+    ttf: 1.0
+
+training:
+  epochs: 50  # Increased since we have early stopping
+  batch_size: 32
+  validation_split: 0.2
+  seed: 42
+  early_stopping_patience: 7
+  # Learning rate schedule
+  initial_lr: 0.001
+  lr_schedule: "reduce_on_plateau"
+
+# Optional: Advanced training settings
+advanced:
+  # Gradient clipping to prevent exploding gradients
+  gradient_clip_norm: 1.0
+  # Class weights for imbalanced risk levels
+  use_class_weights: true
+  # Data augmentation for time series
+  augment_data: false
+
+prompt:
+  template_path: prompts/risk_prompt_template.txt
