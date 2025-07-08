@@ -1,39 +1,77 @@
+# Improved configuration for better performance
 data:
   raw_path: data/raw/
   processed_path: data/processed/
   features_cache: data/features.npy
 
 model:
+  architecture: improved
   type: GRU
   input_shape: [30, 24]
   output_dims:
     risk_level: 4
     ttf: 1
-  hidden_units: 64
-  dropout: 0.3
-  # Loss weights to balance multi-task learning
+  hidden_units: 256        # ⬆️ Increased model capacity
+  dropout: 0.3             # ⬇️ Slightly lower regularization for learning
   loss_weights:
-    risk_level: 1.0
-    ttf: 1.0
+    risk_level: 0.5        # ⬆️ Increase classification emphasis
+    ttf: 0.5               # ⬇️ Equalize task importance
+
 
 training:
-  epochs: 50  # Increased since we have early stopping
-  batch_size: 32
+  epochs: 120              # ⬆️ Give more chance to learn
+  batch_size: 32           # ⬇️ Smaller batches improve generalization
   validation_split: 0.2
   seed: 42
-  early_stopping_patience: 7
-  # Learning rate schedule
-  initial_lr: 0.001
-  lr_schedule: "reduce_on_plateau"
+  early_stopping_patience: 20
+  initial_lr: 0.0005       # ⬇️ More stable learning
+  lr_schedule: reduce_on_plateau
+  lr_factor: 0.5
+  lr_patience: 5
+  min_lr: 1e-7
 
-# Optional: Advanced training settings
+
+# Advanced training settings
 advanced:
-  # Gradient clipping to prevent exploding gradients
   gradient_clip_norm: 1.0
-  # Class weights for imbalanced risk levels
   use_class_weights: true
-  # Data augmentation for time series
-  augment_data: false
+  augment_data: true
+  use_mixup: true           # ⬆️ Enable mixup to help generalize soft labels
+  use_cutmix: false
+  label_smoothing: 0.05     # ⬇️ Reduce from 0.1 to retain sharper decisions
+
+
+# Feature engineering improvements
+features:
+  add_statistical_features: true
+  add_fft_features: true
+  add_wavelet_features: true         # ⬆️ Enable wavelet features for temporal patterns
+  add_rolling_features: true
+  rolling_windows: [3, 5, 10]
+  add_lag_features: true
+  lag_values: [1, 2, 3, 5]
+
+
+# Model ensemble settings
+ensemble:
+  use_ensemble: false
+  models: ['improved', 'transformer']
+  weights: [0.6, 0.4]
+
+# Hyperparameter optimization
+hyperopt:
+  enabled: true
+  trials: 30
+  search_space:
+    hidden_units: [128, 256, 512]
+    dropout: [0.2, 0.3, 0.4]
+    batch_size: [16, 32, 64]
+    learning_rate: [0.0001, 0.0005, 0.001]
+
+
+evaluate:
+  save_plots: true
+
 
 prompt:
   template_path: prompts/risk_prompt_template.txt

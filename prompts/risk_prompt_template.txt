@@ -1,6 +1,0 @@
-Based on the sensor data: {sensor_data}
-
-Please analyze the risk level and time to failure. Output your response in exactly this format:
-
-Risk Level: [Low/Moderate/High/Critical]
-TTF: [numerical value]
