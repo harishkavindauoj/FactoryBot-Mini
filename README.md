@@ -26,7 +26,7 @@ FactoryBot-Mini/
 
 ### 1. Clone the repo:
 ```bash
-git clone https://github.com/your-org/FactoryBot-Mini.git
+git clone https://github.com/harishkavindauoj/FactoryBot-Mini.git
 cd FactoryBot-Mini
 ```
 
@@ -59,6 +59,41 @@ This will:
 - Generate soft labels (risk level + TTF) using Gemini
 - Train the student neural network
 - Evaluate classification + regression performance
+
+---
+
+## 🧭 Real-Time Monitoring Dashboard
+
+FactoryBot-Mini includes a fully interactive **Streamlit dashboard** that visualizes real-time predictions from the trained student model. It allows users to simulate live sensor streams, monitor risk levels, and track time-to-failure estimates.
+
+### 🎛️ Features
+* **Live simulation** of sensor data for 4 equipment units
+* **Risk classification** (Low, Medium, High, Critical) with color-coded alerts
+* **TTF estimation** (in hours & days)
+* **Confidence score tracking**
+* **Auto-refresh support** (user-defined intervals)
+* **Historical charts**: risk trends, confidence, TTF
+* **Sensor readings**: multi-panel time-series plots
+* **Alerts** for CRITICAL risk events
+* **Export to CSV** and session history tracking
+
+### 🚦 How It Works
+1. The dashboard simulates realistic sensor readings based on each equipment ID.
+2. These inputs are normalized and passed to the trained **student model**.
+3. The model returns:
+   * Risk level (classification)
+   * Time-to-failure (regression)
+   * Confidence score
+4. Results are displayed with real-time metrics, charts, and alert banners.
+5. Historical logs are maintained for inspection and CSV export.
+
+### 🖥️ Run the Dashboard
+
+```bash
+streamlit run dashboard.py
+```
+
+After training your model with `python run.py`, launch the dashboard to see real-time predictions in action.
 
 ---
 
